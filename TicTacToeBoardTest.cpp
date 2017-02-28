@@ -18,3 +18,10 @@ TEST(TicTacToeBoardTest, sanityCheck)
 {
 	ASSERT_TRUE(true);
 }
+
+TEST(TicTacToeBoardTest, toggleTurn)
+{
+	TicTacToeBoard board;
+	//board.toggleTurn();
+	
+}
