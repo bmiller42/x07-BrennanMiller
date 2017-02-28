@@ -22,15 +22,25 @@ TicTacToeBoard::TicTacToeBoard()
 {
  	for(int i = 0; i < 3; i++)
 	{
-		
+		for(int j = 0; j < 3; j++)
+		{
+			board[i][j] = Blank;
+		}		
 	}	
+	board[2][1] = X;
 	turn = Invalid;	
 }
 
 //Resets each board location to the Blank Piece value
 void TicTacToeBoard::clearBoard()
 {
-
+	for(int i = 0; i < 3; i++)
+	{
+		for(int j = 0; j < 3; j++)
+		{
+			board[i][j] = Blank;
+		}		
+	}
 }
 
 /**
