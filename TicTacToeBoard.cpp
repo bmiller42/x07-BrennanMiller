@@ -1,4 +1,6 @@
 #include "TicTacToeBoard.h"
+#include <iostream>
+using namespace std;
 /**
  * Class for representing a 3x3 Tic-Tac-Toe game board, using the Piece enum
  * to represent the spaces on the board.
@@ -27,8 +29,7 @@ TicTacToeBoard::TicTacToeBoard()
 			board[i][j] = Blank;
 		}		
 	}	
-	board[2][1] = X;
-	turn = Invalid;	
+	turn = X;	
 }
 
 //Resets each board location to the Blank Piece value
@@ -52,7 +53,18 @@ void TicTacToeBoard::clearBoard()
 **/ 
 Piece TicTacToeBoard::placePiece(int row, int column)
 {
-  return Invalid;
+	if(!(row >= 0 && row <= 2 && column >= 0 && column <= 2)) //if row or column is not
+								  //in bounds return invalid
+	{
+		return Invalid;
+	}
+	else if(board[row][column] == Blank)
+	{
+		board[row][column] = turn;
+		toggleTurn();		
+		return board[row][column];
+	}
+	return board[row][column];
 }
 
 /**
@@ -61,7 +73,12 @@ Piece TicTacToeBoard::placePiece(int row, int column)
 **/
 Piece TicTacToeBoard::getPiece(int row, int column)
 {
-  return Invalid;
+	if(!(row >= 0 && row <= 2 && column >= 0 && column <= 2)) //if row or column is not
+								  //in bounds return invalid
+	{
+		return Invalid;
+	}
+	return board[row][column];
 }
 
 /**
@@ -70,5 +87,52 @@ Piece TicTacToeBoard::getPiece(int row, int column)
 **/
 Piece TicTacToeBoard::getWinner()
 {
-  return Invalid;
+	bool filled = true;
+	Piece check = Invalid;
+	int count = 1;
+
+	for(int i = 0; i < 3; i++)       //Loop  through the rows
+	{
+		count = 1;
+		for(int j = 0; j < 3; j++)
+		{
+			if(check == Blank)
+				filled = false;
+			else if(check == board[i][j] && board[i][j] != Blank)
+			{
+				count++;
+			}
+			if(count == 3)
+				return check;
+			check = board[i][j];
+		}
+	}
+	check = Invalid;
+	for(int i = 0; i < 3; i++)       //loop through the columns
+	{
+		count = 1;
+		for(int j = 0; j < 3; j++)
+		{
+			if(check == Blank)
+				filled = false;
+			else if(check == board[j][i] && board[j][i] != Blank)
+			{
+				count++;
+			}
+			if(count == 3)
+				return check;
+			check = board[j][i];
+		}
+	}
+	
+	//now check for diagnal winners	
+	if(board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != Blank)
+		return board[0][0];
+	else if(board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[1][1] != Blank)
+		return board[1][1];
+
+	if(filled == true)    //if board is filled with no winner
+		return Blank;
+	return Invalid;
+
 }
